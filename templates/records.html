@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Диски {{ ensemble.name }}</title>
+</head>
+<body>
+<div class="container">
+    <h3>Диски {{ ensemble.name }}</h3>
+
+    {#<a href="/add-record?ensemble_id={{ ensemble.id }}">Добавить пластинку</a><br>#}
+    <h3>Добавить пластинку</h3>
+    <form action="/add-record" method="post">
+        <input type="hidden" value="{{ ensemble.id }}" name="ensemble_id">
+        <table>
+            <tr>
+                <td><label for="seller_id">Продавец</label></td>
+                <td>
+                    <select name="seller_id" id="seller_id" required>
+                        {% for seller in sellers %}
+                        <option value="{{ seller.id }}">{{ seller.name }}</option>
+                        {% endfor %}
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><a href="/add-seller?ensemble_id={{ ensemble.id }}">Добавить продавца</a></td>
+            </tr>
+            <tr>
+                <td><label for="name">Название пластинки</label></td>
+                <td><input type="text" name="name" id="name" required></td>
+            </tr>
+            <tr>
+                <td><label for="label_id">Лейбл</label></td>
+                <td>
+                    <select name="label_id" id="label_id" required>
+                        {% for label in labels %}
+                        <option value="{{ label.id }}">{{ label.name }}</option>
+                        {% endfor %}
+                    </select></td>
+            </tr>
+            <tr>
+                <td><label for="price_wholesale">Оптовая цена</label></td>
+                <td><input type="number" min="1" step="any" name="price_wholesale" id="price_wholesale" required></td>
+            </tr>
+            <tr>
+                <td><label for="price_retail">Розничная цена</label></td>
+                <td><input type="number" min="1" step="any" name="price_retail" id="price_retail" required></td>
+            </tr>
+            <tr>
+                <td><label for="release_date">Дата выхода</label></td>
+                <td><input type="date" name="release_date" id="release_date" required></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <button type="submit">Сохранить</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+    <table border="1">
+        <tr>
+            <td>Пластинка</td>
+            <td>Оптовая стоимость</td>
+            <td>Розничная стоимость</td>
+            <td>Дата выпуска</td>
+            <td colspan="4">Действия</td>
+        </tr>
+        {% for record in records %}
+        <tr>
+            <td>{{ record.name }}</td>
+            <td>{{ record.price_wholesale }}</td>
+            <td>{{ record.price_retail }}</td>
+            <td>{{ record.release_date }}</td>
+            <td><a href="/edit-record?ensemble_id={{ ensemble.id }}&record_id={{ record.id }}">Редактировать
+                пластинку</a></td>
+            <td><a href="/records-songs?ensemble_id={{ ensemble.id }}&record_id={{ record.id }}">Произведения в
+                пластинке</a>
+            </td>
+            <td><a href="/record-copies?ensemble_id={{ ensemble.id }}&record_id={{ record.id }}">Копии пластинки</a>
+            </td>
+            <td><a href="/records?ensemble_id={{ ensemble.id }}&delete_id={{ record.id }}">Удалить</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="/ensembles">К ансамблям</a> &nbsp;
+    <a href="/">Домой</a><br>
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+            crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+</div>
+</body>
+</html>
