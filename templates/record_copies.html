@@ -9,39 +9,46 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
 
-    <title>Копии пластинки</title>
+    <title>Копии пластинки </title>
 </head>
-<body>
+<body style="background-color:#212529 !important">
 <div class="container">
-    <h3>Копии пластинки</h3>
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark border-bottom border-info">
+        <ul class="navbar-nav ">
+             <li class="nav-item">
+                 <a class="nav-link" href="/"><i class="fa fa-home" aria-hidden="true"></i> Главная</a>
+
+            </li>
+            <li class="nav-item">
+                <a class="nav-link active ml-2" href="/ensembles"><i class="fa fa-music" aria-hidden="true"></i> Ансамбли</a>
+            </li>
+        </ul>
+    </nav>
+<div class="container">
+    <h2 class="text-light mt-5">Копии пластинки</h2>
 
     {#<a href="/add-record?ensemble_id={{ ensemble.id }}">Добавить пластинку</a><br>#}
-    <h3>Добавить копию пластинки</h3>
+    <h3 class="text-light mt-5">Добавить копию пластинки</h3>
     <form action="/add-record-copy" method="post">
         <input type="hidden" value="{{ record_id }}" name="record_id">
         <input type="hidden" value="{{ ensemble_id }}" name="ensemble_id">
-        <table>
-            <tr>
-                <td><label for="sticker_id">Стикер</label></td>
-                <td>
-                    <select name="sticker_id" id="sticker_id">
+
+       <div class="form-group mt-3">
+        <label class="text-light for="sticker_id">Стикер</label>
+
+                    <select class="form-control bg-dark text-muted" name="sticker_id" id="sticker_id">
                         {% for sticker in stickers %}
                         <option value="{{ sticker.id }}">{{ sticker.id }} - {{ sticker.comment }}</option>
                         {% endfor %}
-                    </select></td>
-            </tr>
-            <tr>
-                <td><a href="/add-sticker?record_id={{ record_id }}&ensemble_id={{ ensemble_id }}">Добавить стикер</a>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2">
-                    <button type="submit">Сохранить</button>
-                </td>
-            </tr>
-        </table>
+                    </select>
+       </div>
+          <a  class="btn btn-secondary mt-3" href="/add-sticker?record_id={{ record_id }}&ensemble_id={{ ensemble_id }}"> + Добавить стикер</a><br>
+
+        <button class="btn btn-info mt-5" type="submit">Добавить копию</button>
+
     </form>
-    <table border="1">
+    <h3 class="text-light mt-5" > Все копии</h3>
+    <table class="table table-dark">
         <tr>
             <td>ID копии</td>
             <td>ID стикера</td>
@@ -70,18 +77,17 @@
                 {% if copy.sold %}
                 Продано
                 {% else %}
-                <a href="/record-copies?ensemble_id={{ ensemble_id }}&record_id={{ record_id }}&sold_id={{ copy.id }}">Продать</a>
+                <a class="btn btn-success" href="/record-copies?ensemble_id={{ ensemble_id }}&record_id={{ record_id }}&sold_id={{ copy.id }}">Продать</a>
                 {% endif %}
             </td>
             <td>
-                <a href="/record-copies?ensemble_id={{ ensemble_id }}&record_id={{ record_id }}&delete_id={{ copy.id }}">Удалить</a>
+                <a class="btn btn-secondary" href="/record-copies?ensemble_id={{ ensemble_id }}&record_id={{ record_id }}&delete_id={{ copy.id }}"> <i class="fa fa-times" aria-hidden="true"></i> Удалить</a>
             </td>
         </tr>
         {% endfor %}
     </table>
-    <a href="/records?ensemble_id={{ ensemble_id }}">К пластинкам</a> &nbsp;
-    <a href="/ensembles">К ансамблям</a> &nbsp;
-    <a href="/">Домой</a><br>
+    <a  class="btn btn-secondary" href="/records?ensemble_id={{ ensemble_id }}"> < Назад </a> &nbsp;
+
     <!-- Optional JavaScript; choose one of the two! -->
 
     <!-- Option 1: Bootstrap Bundle with Popper -->
@@ -89,6 +95,7 @@
             integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
             crossorigin="anonymous"></script>
 
+    <script src="https://use.fontawesome.com/b277eed1e2.js"></script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
     <!--
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
