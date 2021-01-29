@@ -30,7 +30,7 @@ class Musician(db.Model):
     role = db.Column(db.String(80), nullable=False)
     ensemble_id = db.Column(db.Integer, db.ForeignKey('ensemble.id'), nullable=False)
     ensemble = db.relationship('Ensemble',
-                               backref=db.backref('musicians', lazy='dynamic'))
+                               backref=db.backref('musician', lazy='dynamic'))
 
 
 class Record(db.Model):
@@ -58,6 +58,9 @@ class Song(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     name = db.Column(db.String(80), nullable=False)
     ensemble_id = db.Column(db.Integer, db.ForeignKey('ensemble.id'), nullable=False)
+    ensemble = db.relationship('Ensemble',
+                             backref=db.backref('song', lazy='dynamic'))
+
 
 
 class RecordSong(db.Model):
