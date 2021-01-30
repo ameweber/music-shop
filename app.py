@@ -21,7 +21,6 @@ def ensembles():
 @app.route('/add-ensemble', methods=["GET", "POST"])
 def add_ensemble():
     if request.form:
-        print(request.form)
         try:
             ensemble = Ensemble(
                 name=request.form.get("ensemble_name"),
@@ -173,6 +172,7 @@ def add_seller():
 def songs():
     # record_id = request.args.get('record_id')
     ensemble_id = request.args.get('ensemble_id')
+    ensemble = Ensemble.query.filter_by(id=ensemble_id).first()
     songs = Song.query.filter_by(ensemble_id=ensemble_id).all()
     delete_id = request.args.get('delete_id')
     if delete_id:
@@ -182,7 +182,7 @@ def songs():
         return redirect('/songs?ensemble_id=' + ensemble_id)
     # label = Label.query.filter_by(id=1).first()
     # print(label.ensembles)
-    return render_template('songs.html', songs=songs, ensemble_id=ensemble_id)
+    return render_template('songs.html', songs=songs, ensemble_id=ensemble_id, ensemble = ensemble)
 
 
 @app.route('/add-song', methods=["POST"])
